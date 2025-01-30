@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "command": "firefox",    
+    "args": [
+        "index.html"
+    ],
+    "tasks": [
+        {
+            "label": "firefox",
+            "command": "firefox",
+            "args": [
+                "index.html"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "_id": "build",
+                "isDefault": false
+            }
+        }
+    ]
+}

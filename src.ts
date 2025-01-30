@@ -1,7 +1,32 @@
-function greeter(person: string){
-    return "Hello, " + person;
+import { Example } from "./Example"
+import React from 'react';
+
+// Example();
+const e = React.createElement;
+
+class LikeButton extends React.Component {
+  constructor(props: {}) {
+    super(props);
+    this.state = { liked: false };
+  }
+
+  state: {liked: boolean};
+
+  render() {
+    if (this.state.liked) {
+      return 'You liked this.';
+    }
+
+    return e(
+      'button',
+      { onClick: () => this.setState({ liked: true }) },
+      'Like'
+    );
+  }
+  
 }
 
-let user = "Jane User";
- 
-document.body.textContent = greeter(user);
+const domContainer = document.querySelector('#like_button_container');
+//@ts-ignore
+const root = ReactDOM.createRoot(domContainer);
+root.render(e(LikeButton));
