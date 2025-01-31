@@ -11,9 +11,7 @@ class DraggableBox {
     this.position = { x: 0, y: 0 }
   }
 }
-interact('.dropzone').dropzone({
-  // only accept elements matching this CSS selector
-  accept: '#yes-drop',
+interact('.inner-dropzone').dropzone({
   // Require a 75% element overlap for a drop to be possible
   overlap: 0.75,
 
@@ -30,16 +28,22 @@ interact('.dropzone').dropzone({
     // feedback the possibility of a drop
     dropzoneElement.classList.add('drop-target')
     draggableElement.classList.add('can-drop')
-    draggableElement.textContent = 'Dragged in'
   },
   ondragleave: function (event) {
     // remove the drop feedback style
     event.target.classList.remove('drop-target')
-    event.relatedTarget.classList.remove('can-drop')
-    event.relatedTarget.textContent = 'Dragged out'
   },
   ondrop: function (event) {
-    event.relatedTarget.textContent = 'Dropped'
+    current_box = find_box(event.relatedTarget.id);
+    console.log(event.target.getBoundingClientRect())
+    pos = getPos(event.target)
+
+    dx = pos.x + 43;
+    dy = pos.y - 80; 
+    current_box.position.x = dx;
+    current_box.position.y = dy;
+    event.relatedTarget.style.transform =
+      `translate(${dx}px, ${dy}px)`
   },
   ondropdeactivate: function (event) {
     // remove active dropzone feedback
@@ -50,6 +54,7 @@ interact('.dropzone').dropzone({
 
 interact('.draggable').draggable({
   modifiers: [
+
     interact.modifiers.restrict({
       restriction: 'self'           // keep the drag coords within the element
     })
@@ -59,11 +64,8 @@ interact('.draggable').draggable({
       console.log(event.type, event.target)
     },
     move(event) {
-      console.log(event.target.id)
-      console.log("asdfasdfasdfasdf")
 
       current_box = find_box(event.target.id)
-
 
       current_box.position.x += event.dx
       current_box.position.y += event.dy
@@ -73,6 +75,14 @@ interact('.draggable').draggable({
     },
   }
 })
+
+function getPos(el) {
+  // yay readability
+  for (var lx=0, ly=0;
+       el != null;
+       lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+  return {x: lx,y: ly};
+}
 
 function find_box(id) {
   for (box of boxes) {
@@ -85,16 +95,13 @@ function find_box(id) {
 function CreateCourse(num) {
   console.log(num);
   let color = "#29e";
-  if (num == 0)
-  {
+  if (num == 0) {
     color = "background-color:rgb(238, 146, 34)";
   }
-  else if (num == 500)
-  {
+  else if (num == 500) {
     color = "background-color:rgb(34, 153, 238)";
   }
-  else if (num == 600)
-  {
+  else if (num == 600) {
     color = "background-color:rgb(162, 0, 180)";
   }
   const newDiv = Object.assign(
@@ -126,18 +133,16 @@ function CreateSemester() {
 
   let classes = document.getElementById("num_classes").value;
 
-  if (isNaN(classes) || classes == 0)
-  {
+  if (isNaN(classes) || classes == 0) {
     classes = 1;
   }
 
-  newDiv.appendChild(document.createTextNode("Semester "+ num_semesters,));
+  newDiv.appendChild(document.createTextNode("Semester " + num_semesters,));
 
-  for (let i = 0; i < classes; i++)
-  {
+  for (let i = 0; i < classes; i++) {
     let newContent = Object.assign(
       document.createElement("div",),
-      { className: 'inner-dropzone dropzone', id:"semester_" + num_semesters + "_class_" + i }
+      { className: 'inner-dropzone dropzone', id: "semester_" + num_semesters + "_class_" + i }
     );
     newDiv.appendChild(newContent);
   }
