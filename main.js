@@ -82,8 +82,8 @@ function find_box(id) {
 }
 
 
-function CreateCourse() {
-
+function CreateCourse(num) {
+  console.log(num);
   const newDiv = Object.assign(
     document.createElement("div",),
     { className: 'draggable draggable-design', id: "box_" + num_boxes }
@@ -99,8 +99,7 @@ function CreateCourse() {
   newDiv.appendChild(newContent);
 
   // add the newly created element and its content into the DOM
-  const currentDiv = document.getElementById("CreatorButton");
-  document.body.insertBefore(newDiv, currentDiv.nextSibling);
+  document.getElementById("buttons-div").appendChild(newDiv);
   const all_boxes = document.querySelectorAll('.draggable');
 
 
@@ -112,13 +111,14 @@ function CreateSemester() {
     { className: 'outer-dropzone dropzone', id: "semester_" + num_semesters }
   );
 
-
   let classes = document.getElementById("num_classes").value;
 
-  if (classes == 0)
+  if (isNaN(classes) || classes == 0)
   {
     classes = 1;
   }
+
+  newDiv.appendChild(document.createTextNode("Semester "+ num_semesters,));
 
   for (let i = 0; i < classes; i++)
   {
@@ -128,15 +128,7 @@ function CreateSemester() {
     );
     newDiv.appendChild(newContent);
   }
+  document.getElementById("parent-div").appendChild(newDiv);
 
-  var currentDiv = document.getElementById("SemesterButton")
-  if (num_semesters != 0)
-  {
-    console.log("HERE");
-    num = num_semesters - 1;
-    currentDiv = document.getElementById("semester_" + num);
-  }
-
-  document.body.insertBefore(newDiv, currentDiv.nextSibling);
   num_semesters = num_semesters + 1;
 }

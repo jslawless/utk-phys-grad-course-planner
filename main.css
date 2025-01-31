@@ -1,3 +1,8 @@
+#parent-div {
+  width: 40%;
+  float: left;
+}
+
 .draggable {
   touch-action: none;
   user-select: none;
@@ -22,6 +27,7 @@
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
+  background-color: #2b2b2b;
   cursor: pointer;
 }
 
@@ -48,12 +54,12 @@
 }
 
 .outer-dropzone {
-  width: 30%;
+  width: 70%;
   background-color: #bfe4ff;
 }
 
 .inner-dropzone {
-  width: 80%;
+  width: 70%;
   height: 80px;
   background-color: #D3D3D3;
 }

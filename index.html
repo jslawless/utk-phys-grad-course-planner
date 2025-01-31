@@ -8,21 +8,18 @@
 </head>
 
 <body>
-    <div>
-        <button type="button" class="button" onclick="CreateCourse()" id="CreatorButton">New Class</button>
+    <div id="parent-div">
+        <div id="buttons-div">
+            <button type="button" class="button" onclick="CreateCourse(500)" id="CreatorButton">New 500 Class</button>
+            <button type="button" class="button" onclick="CreateCourse(600)" id="CreatorButton">New 600 Class</button>
+            <button type="button" class="button" onclick="CreateCourse(0)" id="CreatorButton">New Other Class</button>
+        </div>
+        <button type="button" class="button" onclick="CreateSemester()" id="SemesterButton">
+            New Semester with
+            <input type="text" id="num_classes" class="num_classes" value="6" onclick="event.stopPropagation();"><br>
+            Classes
+        </button>
     </div>
-    <button type="button" class="button" onclick="CreateSemester()" id="SemesterButton">
-        New Semester with 
-        <input type="text" id="num_classes" class="num_classes" value="6" onclick="event.stopPropagation();"><br> Classes
-    </button>
-    <!-- <div  class="outer-dropzone dropzone">
-        <div class="inner-dropzone dropzone"></div>
-        <div class="inner-dropzone dropzone"></div>
-        <div class="inner-dropzone dropzone"></div>
-        <div class="inner-dropzone dropzone"></div>
-        <div class="inner-dropzone dropzone"></div>
-        <div class="inner-dropzone dropzone"></div>
-    </div> -->
     <script src="main.js"></script>
 </body>
 
