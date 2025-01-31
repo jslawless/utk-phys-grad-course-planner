@@ -84,9 +84,22 @@ function find_box(id) {
 
 function CreateCourse(num) {
   console.log(num);
+  let color = "#29e";
+  if (num == 0)
+  {
+    color = "background-color:rgb(238, 146, 34)";
+  }
+  else if (num == 500)
+  {
+    color = "background-color:rgb(34, 153, 238)";
+  }
+  else if (num == 600)
+  {
+    color = "background-color:rgb(162, 0, 180)";
+  }
   const newDiv = Object.assign(
     document.createElement("div",),
-    { className: 'draggable draggable-design', id: "box_" + num_boxes }
+    { className: 'draggable draggable-design', id: "box_" + num_boxes, style: color }
   );
   const box = new DraggableBox("box_" + num_boxes);
   const newContent = Object.assign(
