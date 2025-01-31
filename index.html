@@ -8,7 +8,21 @@
 </head>
 
 <body>
-    <button type="button" class="button" onclick="Create()" id="CreatorButton">Click Me!</button> 
+    <div>
+        <button type="button" class="button" onclick="CreateCourse()" id="CreatorButton">New Class</button>
+    </div>
+    <button type="button" class="button" onclick="CreateSemester()" id="SemesterButton">
+        New Semester with 
+        <input type="text" id="num_classes" class="num_classes" value="6" onclick="event.stopPropagation();"><br> Classes
+    </button>
+    <!-- <div  class="outer-dropzone dropzone">
+        <div class="inner-dropzone dropzone"></div>
+        <div class="inner-dropzone dropzone"></div>
+        <div class="inner-dropzone dropzone"></div>
+        <div class="inner-dropzone dropzone"></div>
+        <div class="inner-dropzone dropzone"></div>
+        <div class="inner-dropzone dropzone"></div>
+    </div> -->
     <script src="main.js"></script>
 </body>
 

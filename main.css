@@ -1,13 +1,16 @@
 .draggable {
-  width: 10%;
+  touch-action: none;
+  user-select: none;
+  position: absolute;
+}
+
+.draggable-design {
+  width: 12%;
   margin: 1rem 0 0 1rem;
   background-color: #29e;
   color: white;
   border-radius: 0.75em;
   padding: 1.5%;
-  touch-action: none;
-  user-select: none;
-  position: absolute;
 }
 
 .button{
@@ -20,4 +23,49 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.box_text{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #D3D3D3;
+}
+
+.num_classes{
+  width: 10%;
+  padding: 2px 2px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #D3D3D3;
+}
+
+.outer-dropzone {
+  width: 30%;
+  background-color: #bfe4ff;
+}
+
+.inner-dropzone {
+  width: 80%;
+  height: 80px;
+  background-color: #D3D3D3;
+}
+
+.dropzone {
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 5px auto 15px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
 }
