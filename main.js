@@ -36,10 +36,15 @@ interact('.inner-dropzone').dropzone({
   ondrop: function (event) {
     current_box = find_box(event.relatedTarget.id);
     console.log(event.target.getBoundingClientRect())
-    pos = getPos(event.target)
+    var rect = event.target.getBoundingClientRect();
 
-    dx = pos.x + 43;
-    dy = pos.y - 80; 
+    var pos = {
+      top: rect.top + window.pageYOffset,
+      left: rect.left + window.pageXOffset
+    };
+
+    dx = pos.x;
+    dy = pos.y; 
     current_box.position.x = dx;
     current_box.position.y = dy;
     event.relatedTarget.style.transform =
