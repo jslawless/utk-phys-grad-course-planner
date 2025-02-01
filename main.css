@@ -1,6 +1,11 @@
 #parent-div {
-  width: 40%;
+  width: 55%;
+  height: 100%;
   float: left;
+}
+#course-reqs {
+  width: 40%;
+  float: right;
 }
 
 .draggable {
@@ -10,12 +15,13 @@
 }
 
 .draggable-design {
-  width: 160px;
+  width: 25.5%;
   margin: 1rem 0 0 1rem;
   color: white;
   border-radius: 0.75em;
   padding: 1.5%;
 }
+
 
 .button{
   border: none;
@@ -66,7 +72,7 @@
 .dropzone {
   border: dashed 4px transparent;
   border-radius: 4px;
-  margin: 5px auto 15px;
+  margin: 5px auto 5px;
   padding: 10px;
   transition: background-color 0.3s;
 }

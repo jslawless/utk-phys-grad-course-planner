@@ -3,61 +3,84 @@ let num_semesters = 0;
 
 let boxes = [];
 
+let core_nums = ["521", "522", "531", "541", "551", "571"]
+const includesCaseInsensitive = (str, searchString) =>
+  new RegExp(searchString, 'i').test(str);
+
 
 class DraggableBox {
 
-  constructor(id) {
+  constructor(id,type) {
+    this.type = type;
     this.id = id;
     this.position = { x: 0, y: 0 }
+    this.in_semester = false;
+  }
+
+  is_core() {
+    let course = document.getElementById(this.id+ "_input").value
+    for (let i = 0; i < core_nums.length; i++) {
+      if (includesCaseInsensitive(course, core_nums[i]) && includesCaseInsensitive(course, "Phys")){
+        return core_nums[i];
+      }
+    }
+    return 0;
   }
 }
 interact('.inner-dropzone').dropzone({
   // Require a 75% element overlap for a drop to be possible
   overlap: 0.35,
   // listen for drop related events:
+  ondragleave: function (event) {
+    // remove the drop feedback style
+    current_box = find_box(event.relatedTarget.id);
+    current_box.in_semester = false;
+    CheckCourses();
+
+  },
   ondrop: function (event) {
     current_box = find_box(event.relatedTarget.id);
     // var rect = event.target.getBoundingClientRect();
 
-    
+
     var pos = getPos(event.target);
     var pos2 = getPos(event.relatedTarget);
 
-    console.log(pos);
-
     dx = pos.x - pos2.x;
-    dy = pos.y - pos2.y; 
+    dy = pos.y - pos2.y;
     current_box.position.x = pos.x - pos2.x;
     current_box.position.y = pos.y - pos2.y;
     event.relatedTarget.style.transform =
       `translate(${dx}px, ${dy}px)`
+
+    current_box.in_semester = true;
+    CheckCourses();
   }
 })
 
 interact('.draggable').draggable({
   listeners: {
-    start(event) {
-      console.log(event.type, event.target)
-    },
     move(event) {
 
       current_box = find_box(event.target.id)
 
-      current_box.position.x += event.dx
-      current_box.position.y += event.dy
+      current_box.position.x += event.dx;
+      current_box.position.y += event.dy;
 
       event.target.style.transform =
         `translate(${current_box.position.x}px, ${current_box.position.y}px)`
+
+
     },
   }
 })
 
 function getPos(el) {
   // yay readability
-  for (var lx=0, ly=0;
-       el != null;
-       lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
-  return {x: lx,y: ly};
+  for (var lx = 0, ly = 0;
+    el != null;
+    lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+  return { x: lx, y: ly };
 }
 
 function find_box(id) {
@@ -67,9 +90,31 @@ function find_box(id) {
   }
 }
 
+function CheckCourses() {
+  let reqs = ["c_sem","c_core","c_core_521","c_core_522","c_core_531","c_core_541",
+    "c_core_551","c_core_571","c_col","c_upp"
+  ]
+  for (let i = 0; i < reqs.length; i++)
+  {
+    document.getElementById(reqs[i]).checked = false;
+  }
+  console.log(boxes)
+  for (var i = 0; i < boxes.length; i++){
+    console.log(boxes[i].is_core());
+    if (boxes[i].is_core() && this.in_semester == true)
+    {
+      document.getElementById("c_core_" + boxes[i].is_core()).checked = true;
+    }
+    if (boxes[i].is_core() && this.in_semester == true)
+      {
+        document.getElementById("c_core_" + boxes[i].is_core()).checked = true;
+      }
+  }
+
+}
+
 
 function CreateCourse(num) {
-  console.log(num);
   let color = "#29e";
   if (num == 0) {
     color = "background-color:rgb(238, 146, 34)";
@@ -84,7 +129,7 @@ function CreateCourse(num) {
     document.createElement("div",),
     { className: 'draggable draggable-design', id: "box_" + num_boxes, style: color }
   );
-  const box = new DraggableBox("box_" + num_boxes);
+  const box = new DraggableBox("box_" + num_boxes,num);
   const newContent = Object.assign(
     document.createElement("input"),
     { className: 'box_text', id: "box_" + num_boxes + "_input", placeholder: "Type class here..." }
