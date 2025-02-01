@@ -13,57 +13,28 @@ class DraggableBox {
 }
 interact('.inner-dropzone').dropzone({
   // Require a 75% element overlap for a drop to be possible
-  overlap: 0.75,
-
+  overlap: 0.35,
   // listen for drop related events:
-
-  ondropactivate: function (event) {
-    // add active dropzone feedback
-    event.target.classList.add('drop-active')
-  },
-  ondragenter: function (event) {
-    var draggableElement = event.relatedTarget
-    var dropzoneElement = event.target
-
-    // feedback the possibility of a drop
-    dropzoneElement.classList.add('drop-target')
-    draggableElement.classList.add('can-drop')
-  },
-  ondragleave: function (event) {
-    // remove the drop feedback style
-    event.target.classList.remove('drop-target')
-  },
   ondrop: function (event) {
     current_box = find_box(event.relatedTarget.id);
-    console.log(event.target.getBoundingClientRect())
-    var rect = event.target.getBoundingClientRect();
+    // var rect = event.target.getBoundingClientRect();
 
-    var pos = {
-      top: rect.top + window.pageYOffset,
-      left: rect.left + window.pageXOffset
-    };
+    
+    var pos = getPos(event.target);
+    var pos2 = getPos(event.relatedTarget);
 
-    dx = pos.x;
-    dy = pos.y; 
-    current_box.position.x = dx;
-    current_box.position.y = dy;
+    console.log(pos);
+
+    dx = pos.x - pos2.x;
+    dy = pos.y - pos2.y; 
+    current_box.position.x = pos.x - pos2.x;
+    current_box.position.y = pos.y - pos2.y;
     event.relatedTarget.style.transform =
       `translate(${dx}px, ${dy}px)`
-  },
-  ondropdeactivate: function (event) {
-    // remove active dropzone feedback
-    event.target.classList.remove('drop-active')
-    event.target.classList.remove('drop-target')
   }
 })
 
 interact('.draggable').draggable({
-  modifiers: [
-
-    interact.modifiers.restrict({
-      restriction: 'self'           // keep the drag coords within the element
-    })
-  ],
   listeners: {
     start(event) {
       console.log(event.type, event.target)
