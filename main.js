@@ -4,9 +4,10 @@ let num_semesters = 0;
 let boxes = [];
 
 let core_nums = ["521", "522", "531", "541", "551", "571"]
+
+CheckCourses()
 const includesCaseInsensitive = (str, searchString) =>
   new RegExp(searchString, 'i').test(str);
-
 
 class DraggableBox {
 
@@ -82,11 +83,13 @@ interact('.draggable').draggable({
 
       current_box.position.x += event.dx;
       current_box.position.y += event.dy;
+      current_box.in_semester = false;
+      CheckCourses();
 
       event.target.style.transform =
         `translate(${current_box.position.x}px, ${current_box.position.y}px)`
 
-
+      
     },
   }
 })
@@ -117,7 +120,7 @@ function CheckCourses() {
     document.getElementById(reqs[i]).checked = false;
   }
   for (var i = 0; i < boxes.length; i++) {
-    if (this.in_semester == false) {
+    if (boxes[i].in_semester == false) {
       continue;
     }
     if (boxes[i].is_core()) {
@@ -130,18 +133,16 @@ function CheckCourses() {
       document.getElementById("c_sem").checked = true;
     }
     else if (boxes[i].is_collo()) {
-      document.getElementById("c_col").checked = true;
-    } 
-    else if (boxes[i].type === 500)
-    {
+      num_col += 1;
+    }
+    else if (boxes[i].type === 500) {
       extra_500 = true;
     }
   }
   if (num_600s > 4) {
     document.getElementById("c_upp").checked = true;
   }
-  else if (num_600s == 4 && extra_500)
-  {
+  else if (num_600s == 4 && extra_500) {
     document.getElementById("c_upp").checked = true;
   }
   if (num_col > 4) {
@@ -169,8 +170,10 @@ function CreateCourse(num) {
   const box = new DraggableBox("box_" + num_boxes, num);
   const newContent = Object.assign(
     document.createElement("input"),
-    { className: 'box_text', id: "box_" + num_boxes + "_input", 
-      placeholder: "Type class here...", oninput: "CheckCourses()" }
+    {
+      className: 'box_text', id: "box_" + num_boxes + "_input",
+      placeholder: "Type class here..."
+    }
   );
   num_boxes = num_boxes + 1;
 
